@@ -88,4 +88,24 @@ router.post("/mockingusers", async (req, res, next) => {
     }
 });
 
+router.get("/pets", async (req, res) => {
+    try {
+        const pets = await Pet.find();
+        return res.status(201).json(pets);
+    } catch (error) {
+        console.error('Error saving pets:', error);
+        return res.status(500).json({ error: 'Failed to save pets' });
+    }
+});
+
+router.get("/users", async (req, res) => {
+    try {
+        const users = await User.find();
+        return res.status(201).json(users);
+    } catch (error) {
+        console.error('Error saving users:', error);
+        return res.status(500).json({ error: 'Failed to save users' });
+    }
+});
+
 export default router;
