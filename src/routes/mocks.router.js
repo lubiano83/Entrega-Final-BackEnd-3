@@ -110,31 +110,26 @@ router.get("/users", async (req, res) => {
 
 router.post("/generateData", async (req, res) => {
     try {
-        const { users = 0, pets = 0 } = req.query; // Valores predeterminados: 50 usuarios y 100 mascotas
+        const { users = 0, pets = 0 } = req.query;
 
-        // Generación de mascotas
         const petsList = [];
         for (let i = 0; i < Number(pets); i++) {
             const pet = generatePets();
             petsList.push(pet);
         }
 
-        // Inserción de mascotas en la base de datos
         const savedPets = await Pet.insertMany(petsList);
         console.log(`${petsList.length} pets generated and saved.`);
 
-        // Generación de usuarios
         const usersList = [];
         for (let i = 0; i < Number(users); i++) {
             const user = await generateUsers();
             usersList.push(user);
         }
 
-        // Inserción de usuarios en la base de datos
         const savedUsers = await User.insertMany(usersList);
         console.log(`${usersList.length} users generated and saved.`);
 
-        // Respuesta final con el conteo de usuarios y mascotas creados
         return res.status(201).json({
             message: "Data generated successfully",
             generated: {
