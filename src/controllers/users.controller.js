@@ -85,7 +85,6 @@ const generateData = async(req, res) => {
             petsList.push(pet);
         }
         const savedPets = await petsService.insert(petsList);
-        console.log(`${petsList.length} pets generated and saved.`);
         const usersList = [];
         for (let i = 0; i < Number(users); i++) {
             const user = generateUsers();
