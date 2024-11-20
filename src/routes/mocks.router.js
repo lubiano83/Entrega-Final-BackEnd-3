@@ -10,6 +10,6 @@ router.get("/pets", petsController.getAllPets);
 router.get("/mockingusers", usersController.getMockingUsers);
 router.post("/mockingusers", usersController.postMockingUsers);
 router.get("/users", usersController.getAllUsers);
-router.post("/generateData", usersController.generateData);
+router.post("/generatedata", usersController.generateData);
 
 export default router;
