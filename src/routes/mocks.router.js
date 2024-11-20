@@ -4,6 +4,7 @@ import Pet from '../dao/models/Pet.js';
 import User from '../dao/models/User.js';
 import petsController from '../controllers/pets.controller.js';
 import usersController from '../controllers/users.controller.js';
+import { createHash } from '../utils/index.js';
 
 const router = Router();
 
@@ -29,7 +30,8 @@ router.post("/generateData", async (req, res) => {
 
         const usersList = [];
         for (let i = 0; i < Number(users); i++) {
-            const user = await generateUsers();
+            const user = generateUsers();
+            user.password = await createHash(user.password);
             usersList.push(user);
         }
 
