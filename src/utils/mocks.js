@@ -13,7 +13,7 @@ const generatePets = () => {
     };
 };
 
-const generateUsers = async() => {
+const generateUsers = () => {
     const pets = [];
     // let numeroDeMascotas = parseInt(faker.string.numeric({ min: 1, max: 5 }));
 
@@ -22,16 +22,14 @@ const generateUsers = async() => {
     //         _id: new mongoose.Types.ObjectId(), // Simulación de una referencia de mascota
     //     });
     // }
-
-    const hashedPassword = await createHash("coder123");
-
+    
     return {
         first_name: faker.person.firstName(),
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
-        password: hashedPassword,
+        password: "coder123",
         role: 'user',
-        pets,
+        pets: [],
     };
 };
 
