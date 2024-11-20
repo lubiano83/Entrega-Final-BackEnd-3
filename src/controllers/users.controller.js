@@ -1,6 +1,6 @@
-import { usersService } from "../services/index.js"
+import { petsService, usersService } from "../services/index.js"
 import __dirname from "../utils/index.js";
-import { generateUsers } from '../utils/mocks.js';
+import { generateUsers, generatePets } from '../utils/mocks.js';
 import CustomError from "../services/errors/custom.error.js";
 import generateInfoError from "../services/errors/info.js";
 import Errors from "../services/errors/enums.js";
@@ -85,11 +85,48 @@ const postMockingUsers = async (req, res, next) => {
     }
 };
 
+const generateData = async(req, res) => {
+    try {
+        const { users = 0, pets = 0 } = req.query;
+
+        const petsList = [];
+        for (let i = 0; i < Number(pets); i++) {
+            const pet = generatePets();
+            petsList.push(pet);
+        }
+
+        const savedPets = await petsService.insert(petsList);
+        console.log(`${petsList.length} pets generated and saved.`);
+
+        const usersList = [];
+        for (let i = 0; i < Number(users); i++) {
+            const user = generateUsers();
+            user.password = await createHash(user.password);
+            usersList.push(user);
+        }
+
+        const savedUsers = await usersService.insert(usersList);
+        console.log(`${usersList.length} users generated and saved.`);
+
+        return res.status(201).json({
+            message: "Data generated successfully",
+            generated: {
+                users: savedUsers.length,
+                pets: savedPets.length,
+            },
+        });
+    } catch (error) {
+        console.error("Error generating data:", error);
+        return res.status(500).json({ error: "Failed to generate data" });
+    }
+}
+
 export default {
     deleteUser,
     getAllUsers,
     getUser,
     updateUser,
     getMockingUsers,
-    postMockingUsers
+    postMockingUsers,
+    generateData
 }
