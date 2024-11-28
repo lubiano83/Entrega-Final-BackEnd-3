@@ -1,0 +1,40 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: entrega-final-deployment
+  labels:
+    app: entrega-final
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: entrega-final
+  template:
+    metadata:
+      labels:
+        app: entrega-final
+    spec:
+      containers:
+      - name: entrega-final
+        image: lubiano83/entrega-final:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_URL
+          value: "mongodb+srv://lubiano83:OdGteJUhwyj5SJ4H@lubiano83.egrhqkm.mongodb.net/Storage?retryWrites=true&w=majority&appName=lubiano83"
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: entrega-final-service
+spec:
+  selector:
+    app: entrega-final
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

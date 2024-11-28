@@ -23,7 +23,7 @@ const swaggerOptions = {
         openapi: "3.0.1",
         info: {
             title: "Documentacion de la App Adoptame",
-            description: "App dedicada a encontrar familias para los perritos o jirafas de la calle"
+            description: "App dedicada a encontrar familias para los perritos de la calle"
         }
     },
     apis: ["./src/docs/**/*.yaml"] // Esto lee todos las carpetas y sus archivos .yaml dentro de docs.
@@ -37,6 +37,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Rutas
+app.get("/", (req, res) => {
+    res.send("!Entrega Final Backend Coderhouse!");
+});
+
 app.use('/api/users',usersRouter);
 app.use('/api/pets',petsRouter);
 app.use('/api/adoptions',adoptionsRouter);
