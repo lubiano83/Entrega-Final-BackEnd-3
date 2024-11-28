@@ -103,6 +103,18 @@ const generateData = async(req, res) => {
         console.error("Error generating data:", error);
         return res.status(500).json({ error: "Failed to generate data" });
     }
+
+}
+
+// Modificacion nuestra:
+const createUser = async(req, res) => {
+    try {
+        const newUser = req.body;
+        await usersService.create(newUser);
+        res.status(201).send({ status: "success", payload: newUser });
+    } catch (error) {
+        res.status(500).send({ status: "error", error: error.message });
+    }
 }
 
 export default {
@@ -112,5 +124,6 @@ export default {
     updateUser,
     getMockingUsers,
     postMockingUsers,
-    generateData
+    generateData,
+    createUser
 }
