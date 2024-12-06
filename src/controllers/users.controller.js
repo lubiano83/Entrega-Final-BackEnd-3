@@ -107,15 +107,16 @@ const generateData = async(req, res) => {
 }
 
 // Modificacion nuestra:
-const createUser = async(req, res) => {
+const createUser = async (req, res) => {
     try {
         const newUser = req.body;
-        await usersService.create(newUser);
-        res.status(201).send({ status: "success", payload: newUser });
+        const createdUser = await usersService.create(newUser);
+        res.status(201).send({ status: "success", payload: createdUser });
     } catch (error) {
         res.status(500).send({ status: "error", error: error.message });
     }
-}
+};
+
 
 export default {
     deleteUser,
