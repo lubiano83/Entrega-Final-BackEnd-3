@@ -21,6 +21,22 @@ Este proyecto es una plantilla base para construir aplicaciones con Node.js y Ex
 - **mocha**: Framework para realizar pruebas automatizadas.
 - **nodemon**: Herramienta para reiniciar automáticamente el servidor durante el desarrollo.
 
+## Estructura del Proyecto
+
+El proyecto sigue una estructura modular, separando las funcionalidades principales en rutas y controladores. Las rutas disponibles incluyen:
+
+- **Usuarios**: Registro, autenticación y gestión de usuarios.
+- **Sesiones**: Manejo de inicio de sesión y validación de tokens.
+- **Mascotas**: CRUD completo de mascotas, con soporte para carga de imágenes.
+- **Adopciones**: Creación y consulta de adopciones.
+- **Mocking**: Generación y obtención de datos ficticios.
+
+## Documentación de la API
+
+La documentación de la API está generada con **Swagger**. Para acceder a ella, inicia el servidor y visita:
+
+Incluye ejemplos interactivos para probar las diferentes rutas y métodos de la API.
+
 ## Scripts Disponibles
 
 - `start`: Inicia la aplicación en modo producción.
@@ -29,11 +45,16 @@ Este proyecto es una plantilla base para construir aplicaciones con Node.js y Ex
 
 ## Uso del Contenedor Docker
 
-La imagen Docker del proyecto está disponible en Docker Hub y puede ser descargada directamente desde el siguiente enlace:
+El proyecto está disponible como una imagen Docker, lo que facilita su despliegue en cualquier entorno compatible con Docker.
+
+### Imagen en Docker Hub
+
+La imagen Docker del proyecto puede descargarse directamente desde Docker Hub:
 
 [Docker Hub: lubiano83/entrega-final](https://hub.docker.com/repository/docker/lubiano83/entrega-final/general)
 
 ### Comandos para Usar el Contenedor
+
 1. **Descargar la imagen desde Docker Hub**:
    ```bash
    docker pull lubiano83/entregafinal:latest
