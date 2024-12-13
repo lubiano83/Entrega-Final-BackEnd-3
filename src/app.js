@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 const HOST = "localhost";
-const connection = mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL);
 
 const swaggerOptions = {
     definition: {
@@ -37,10 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Rutas
-app.get("/", (req, res) => {
-    res.send("!Entrega Final Backend Coderhouse!");
-});
-
+app.get("/", (req, res) => {res.send("!Entrega Final Backend Coderhouse!")});
 app.use('/api/users',usersRouter);
 app.use('/api/pets',petsRouter);
 app.use('/api/adoptions',adoptionsRouter);
