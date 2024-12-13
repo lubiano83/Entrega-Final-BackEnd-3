@@ -14,23 +14,24 @@ const getAllUsers = async(req,res)=>{
 const getUser = async(req,res)=> {
     const userId = req.params.uid;
     const user = await usersService.getUserById(userId);
-    if(!user) return res.status(404).send({status:"error",error:"User not found"})
-    res.send({status:"success",payload:user})
+    if(!user) return res.status(404).send({ status:"error", error:"User not found" })
+    res.send({ status:"success", payload:user })
 }
 
 const updateUser =async(req,res)=>{
     const updateBody = req.body;
     const userId = req.params.uid;
     const user = await usersService.getUserById(userId);
-    if(!user) return res.status(404).send({status:"error", error:"User not found"})
+    if(!user) return res.status(404).send({ status:"error", error:"User not found" })
     const result = await usersService.update(userId,updateBody);
-    res.send({status:"success",message:"User updated"})
+    res.send({ status:"success", message:"User updated" })
 }
 
 const deleteUser = async(req,res) =>{
-    const userId = req.params.uid;
-    const result = await usersService.getUserById(userId);
-    res.send({status:"success",message:"User deleted"})
+    const { uid } = req.params;
+    const result = await usersService.delete(uid);
+    if(!result) return res.status(404).send({ status: "error", message: "User not found" });
+    res.status(200).send({ status: "success", message: "User deleted" });
 }
 
 const getMockingUsers = async(req, res) => {

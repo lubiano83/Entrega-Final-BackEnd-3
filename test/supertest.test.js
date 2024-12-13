@@ -8,6 +8,7 @@ describe("Testing de la App Web Adoptame", () => {
     // Testing de Pets
     describe("Testing de Pets: ", () => {
         let petId; // ID dinámico para pruebas con mascotas
+        let petIdWithImage;
 
         it("Endpoint GET /api/pets debe obtener las mascotas correctamente", async () => {
             const { statusCode, body } = await requester.get("/api/pets");
@@ -36,6 +37,7 @@ describe("Testing de la App Web Adoptame", () => {
             expect(resultado.status).to.be.equal(200);
             expect(resultado._body.payload).to.be.have.property("_id");
             expect(resultado._body.payload.image).to.be.ok;
+            petIdWithImage = resultado._body.payload._id;
         });
 
         it("Endpoint PUT /api/pets/:pid debe poder modificar una mascota correctamente", async () => {
@@ -58,6 +60,18 @@ describe("Testing de la App Web Adoptame", () => {
 
             const { statusCode } = await requester.delete(`/api/pets/${petId}`);
             expect(statusCode).to.equal(200);
+        });
+
+        after(async () => {
+            // Eliminar la mascota después de los tests
+            if (petIdWithImage) {
+                const { statusCode } = await requester.delete(`/api/pets/${petIdWithImage}`);
+                if (statusCode === 200) {
+                    console.log(`Mascota con imagen y ID ${petIdWithImage} eliminada correctamente.`);
+                } else {
+                    console.warn(`No se pudo eliminar la mascota con imagen con ID ${petIdWithImage}.`);
+                }
+            }
         });
     });
 
@@ -123,6 +137,6 @@ describe("Testing de la App Web Adoptame", () => {
             expect(statusCode).to.equal(200);
             expect(body.status).to.equal("success");
             expect(body.message).to.equal("User deleted");
-        });        
+        });
     });
 });
