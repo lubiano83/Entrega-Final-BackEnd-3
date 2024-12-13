@@ -53,6 +53,8 @@ La imagen Docker del proyecto puede descargarse directamente desde Docker Hub:
 
 [Docker Hub: lubiano83/entrega-final](https://hub.docker.com/repository/docker/lubiano83/entrega-final/general)
 
+ruta: http://localhost:55000
+
 ### Comandos para Usar el Contenedor
 
 1. **Descargar la imagen desde Docker Hub**:
