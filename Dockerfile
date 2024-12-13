@@ -1,6 +1,9 @@
 # Usa una imagen base estable
 FROM node:20-alpine
 
+# Instala herramientas necesarias para compilar bcrypt
+RUN apk add --no-cache python3 make g++
+
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
