@@ -1,8 +1,6 @@
-# Plantilla Base Node.js y Express
+# Plantilla Documentación
 
-Este proyecto es una plantilla base para construir aplicaciones con Node.js y Express. Incluye funcionalidades para autenticación, encriptación, manejo de archivos, generación de datos ficticios y pruebas automatizadas. Además, provee documentación interactiva para APIs utilizando Swagger.
-
----
+Este proyecto es una plantilla base para construir aplicaciones con Node.js y Express. Está configurada para soportar autenticación, encriptación, manejo de archivos, generación de datos ficticios y pruebas automatizadas. Además, incluye documentación interactiva para APIs utilizando Swagger.
 
 ## Dependencias del Proyecto
 
@@ -23,47 +21,27 @@ Este proyecto es una plantilla base para construir aplicaciones con Node.js y Ex
 - **mocha**: Framework para realizar pruebas automatizadas.
 - **nodemon**: Herramienta para reiniciar automáticamente el servidor durante el desarrollo.
 
----
-
 ## Estructura del Proyecto
 
 El proyecto sigue una estructura modular, separando las funcionalidades principales en rutas y controladores. Las rutas disponibles incluyen:
 
-### Rutas de la API
-
-#### **Usuarios** (`/api/users`)
-- **GET `/`**: Obtiene todos los usuarios registrados.
-- **POST `/`**: Crea un nuevo usuario.
-- **GET `/:uid`**: Obtiene información de un usuario específico por ID.
-- **PUT `/:uid`**: Actualiza la información de un usuario.
-- **DELETE `/:uid`**: Elimina un usuario por ID.
-
-#### **Mascotas** (`/api/pets`)
-- **GET `/`**: Obtiene todas las mascotas registradas.
-- **POST `/`**: Crea una nueva mascota.
-- **POST `/withimage`**: Crea una mascota con una imagen cargada (requiere el campo `image` en el formulario).
-- **PUT `/:pid`**: Actualiza la información de una mascota por ID.
-- **DELETE `/:pid`**: Elimina una mascota por ID.
-
----
+- **Usuarios**: Registro, autenticación y gestión de usuarios.
+- **Sesiones**: Manejo de inicio de sesión y validación de tokens.
+- **Mascotas**: CRUD completo de mascotas, con soporte para carga de imágenes.
+- **Adopciones**: Creación y consulta de adopciones.
+- **Mocking**: Generación y obtención de datos ficticios.
 
 ## Documentación de la API
 
-La documentación de la API está generada con **Swagger**. Para acceder a ella:
-1. Inicia el servidor local.
-2. Accede a la ruta [http://localhost:55000/api-docs](http://localhost:55000/api-docs) en tu navegador.
+La documentación de la API está generada con **Swagger**. Para acceder a ella, inicia el servidor y visita:
 
 Incluye ejemplos interactivos para probar las diferentes rutas y métodos de la API.
 
----
-
 ## Scripts Disponibles
 
-- **`start`**: Inicia la aplicación en modo producción.
-- **`dev`**: Inicia la aplicación en modo desarrollo con `nodemon`.
-- **`test`**: Ejecuta las pruebas definidas en `test/supertest.test.js` utilizando Mocha.
-
----
+- `start`: Inicia la aplicación en modo producción.
+- `dev`: Inicia la aplicación en modo desarrollo con `nodemon`.
+- `test`: Ejecuta las pruebas definidas en `test/supertest.test.js` utilizando Mocha.
 
 ## Uso del Contenedor Docker
 
@@ -72,17 +50,13 @@ El proyecto está disponible como una imagen Docker, lo que facilita su desplieg
 ### Imagen en Docker Hub
 
 La imagen Docker del proyecto puede descargarse directamente desde Docker Hub:
+
 [Docker Hub: lubiano83/entrega-final](https://hub.docker.com/repository/docker/lubiano83/entrega-final/general)
+
+ruta: http://localhost:55000
 
 ### Comandos para Usar el Contenedor
 
 1. **Descargar la imagen desde Docker Hub**:
    ```bash
    docker pull lubiano83/entregafinal:latest
-   ```
-2. **Ejecutar el contenedor**:
-   ```bash
-   docker run -p 55000:55000 lubiano83/entregafinal:latest
-   ```
-
----
