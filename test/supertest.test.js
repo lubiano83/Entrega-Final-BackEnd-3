@@ -139,4 +139,84 @@ describe("Testing de la App Web Adoptame", () => {
             expect(body.message).to.equal("User deleted");
         });
     });
+
+    describe("Testing de Adoptions: ", () => {
+        let userId; // ID dinámico para pruebas con usuarios
+        let petId; // ID dinámico para pruebas con mascotas
+        let adoptionId; // ID dinámico para pruebas con adopciones
+    
+        before(async () => {
+            // Crear un usuario de prueba
+            const mockUsuario = {
+                first_name: "Juan",
+                last_name: "Pérez",
+                email: "juanperez@example.com",
+                password: "1234",
+            };
+            const userResponse = await requester.post("/api/users").send(mockUsuario);
+            userId = userResponse.body.payload._id;
+    
+            // Crear una mascota de prueba
+            const mockPet = {
+                name: "Luna",
+                specie: "Gato",
+                birthDate: "2020-05-01",
+            };
+            const petResponse = await requester.post("/api/pets").send(mockPet);
+            petId = petResponse.body.payload._id;
+        });
+    
+        it("Endpoint GET /api/adoptions debe obtener todas las adopciones correctamente", async () => {
+            const { statusCode, body } = await requester.get("/api/adoptions");
+            expect(statusCode).to.equal(200);
+            expect(body).to.have.property("payload").that.is.an("array");
+        });
+    
+        it("Endpoint POST /api/adoptions/:uid/:pid debe crear una adopción correctamente", async () => {
+            if (!userId || !petId) {
+                throw new Error("El ID del usuario o de la mascota no está disponible en este punto");
+            }
+        
+            const { statusCode, body } = await requester.post(`/api/adoptions/${userId}/${petId}`);
+            
+            // Validar respuesta
+            expect(statusCode).to.equal(200);
+            expect(body.status).to.equal("success");
+            expect(body.message).to.equal("Pet adopted");
+        
+            // Realizar una consulta a la base de datos para obtener el adoptionId
+            const { body: adoptionResponse } = await requester.get("/api/adoptions");
+            const adoption = adoptionResponse.payload.find(
+                (adoption) => adoption.owner === userId && adoption.pet === petId
+            );
+        
+            if (!adoption) {
+                throw new Error("No se encontró la adopción creada en la base de datos");
+            }
+        
+            adoptionId = adoption._id; // Guardar el ID para usarlo en el siguiente test
+        });        
+    
+        it("Endpoint GET /api/adoptions/:aid debe obtener una adopción por ID correctamente", async () => {
+            if (!adoptionId) throw new Error("El ID de la adopción no está disponible en este punto");
+    
+            const { statusCode, body } = await requester.get(`/api/adoptions/${adoptionId}`);
+            expect(statusCode).to.equal(200);
+            expect(body.status).to.equal("success");
+            expect(body.payload).to.have.property("_id", adoptionId);
+        });
+    
+        after(async () => {
+            // Limpiar los datos creados en las pruebas
+            if (adoptionId) {
+                await requester.delete(`/api/adoptions/${adoptionId}`);
+            }
+            if (petId) {
+                await requester.delete(`/api/pets/${petId}`);
+            }
+            if (userId) {
+                await requester.delete(`/api/users/${userId}`);
+            }
+        });
+    });    
 });
